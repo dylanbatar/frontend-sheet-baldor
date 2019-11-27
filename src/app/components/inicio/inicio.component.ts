@@ -22,19 +22,7 @@ export class InicioComponent implements OnInit {
   public options: any = {};
   datos: any[] = [];
   loading: boolean = false;
-  enero = 0
-  febrero = 0
-  marzo = 0
-  abril = 0
-  mayo = 0
-  junio = 0
-  julio = 0
-  agosto = 0
-  septiembre = 0
-  octubre = 0
-  noviembre = 0
-  diciembre = 0;
-  // arrayMeses = [0, '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+  mesesValue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   constructor(private _servicio: ConexionNodeService) {
     let tempArray = [];
@@ -46,47 +34,14 @@ export class InicioComponent implements OnInit {
           this.datos.push(mes[1]);
         });
 
-        for (let i = 0; i < this.datos.length; i++) {
-          if (this.datos[i] == '01') {
-            this.enero++;
-          }
-          if (this.datos[i] == "02") {
-            this.febrero++;
-          }
-          if (this.datos[i] == "03") {
-            this.marzo++;
-          }
-          if (this.datos[i] == "04") {
-            this.abril++;
-          }
-          if (this.datos[i] == "05") {
-            this.mayo++;
-          }
-          if (this.datos[i] == "06") {
-            this.junio++;
-          }
-          if (this.datos[i] == "07") {
-            this.julio++;
-          }
-          if (this.datos[i] == "08") {
-            this.agosto++;
-          }
-          if (this.datos[i] == "09") {
-            this.septiembre++;
-          }
-          if (this.datos[i] == "10") {
-            this.octubre++;
-          }
-          if (this.datos[i] == "11") {
-            this.noviembre++;
-          }
-          if (this.datos[i] == "12") {
-            this.diciembre++;
+        for (let i = 0; i < this.mesesValue.length; i++) {
+          for (let j = 0; j < this.datos.length; j++) {
+            if (Number(this.datos[j]) == (i + 1)) {
+              this.mesesValue[i]++;
+            }
           }
         }
 
-
-        console.log(this.agosto);
 
         this.loading = true;
         if (this.loading) {
@@ -107,7 +62,7 @@ export class InicioComponent implements OnInit {
             series: [
               {
                 name: 'mes',
-                data: [this.enero, this.febrero, this.marzo, this.abril, this.mayo,this.junio, this.julio, this.agosto, this.septiembre, this.octubre, this.noviembre, this.diciembre]
+                data: this.mesesValue.map(i => i)
               },
             ]
           }
@@ -121,7 +76,7 @@ export class InicioComponent implements OnInit {
   }
 
 
-  refrescar(){
+  refrescar() {
     window.location.reload();
   }
 }
